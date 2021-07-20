@@ -9,6 +9,10 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    build: .
+    container_name: db
+    networks:
+      - djangonetwork
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -18,3 +22,10 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    links:
+      - db:db
+    networks:
+      - djangonetwork
+  networks:
+    djangonetwork:
+      driver: bridge
