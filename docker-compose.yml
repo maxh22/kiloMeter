@@ -11,8 +11,7 @@ services:
       - POSTGRES_PASSWORD=postgres
     build: .
     container_name: db
-    networks:
-      - djangonetwork
+
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -24,8 +23,4 @@ services:
       - db
     links:
       - db:db
-    networks:
-      - djangonetwork
-  networks:
-    djangonetwork:
-      driver: bridge
+
