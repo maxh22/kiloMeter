@@ -21,3 +21,5 @@ services:
       - db
     links:
       - db:db
+  jenkins:
+    user: root
