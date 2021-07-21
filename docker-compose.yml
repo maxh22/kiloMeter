@@ -9,8 +9,6 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    build: .
-    container_name: db
 
   web:
     build: .
