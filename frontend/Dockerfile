@@ -1,19 +1,31 @@
 FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install -y git xz-utils zip curl libglu1-mesa wget libpq-dev gcc
+# Prerequisites
+RUN apt update && apt install -y curl git unzip xz-utils zip libglu1-mesa
 
-WORKDIR /frontend
-COPY . /frontend/
+# Set up new user
+RUN useradd -ms /bin/bash developer
+USER developer
+WORKDIR /code
+COPY . /code/
 
+# Download Flutter SDK
 RUN git clone https://github.com/flutter/flutter.git
-ENV PATH="$PATH:/frontend/flutter/bin"
+ENV PATH "$PATH:/code/flutter/bin"
+USER root
+RUN chmod -R a+w /code
+USER developer
+# Run basic check to download Dark SDK
+
+RUN flutter doctor
+# Enable flutter web
+RUN flutter channel beta
+RUN flutter upgrade
+RUN flutter config --enable-web
+RUN flutter pub global activate webdev
 
 RUN flutter pub get
-RUN flutter pub run build_runner build
-RUN flutter config --enable-web
-RUN flutter upgrade
-RUN flutter pub global activate webdev
-RUN flutter doctor
 
-EXPOSE 3000
-CMD flutter pub global run webdev serve 0.0.0.0:3000
+
+
+

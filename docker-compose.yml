@@ -11,9 +11,8 @@ services:
       - POSTGRES_PASSWORD=postgres
 
   backend:
-    image: backend
+    build: ./backend
     container_name: backend-container
-    command: python3 code/backend/manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/backend
     ports:
@@ -35,6 +34,6 @@ services:
     volumes:
       - .:/frontend
     build: ./frontend
-    command: flutter pub global run webdev serve 0.0.0.0:3000
-
+    command: >
+      sh -c "flutter pub get && flutter pub global run webdev serve 0.0.0.0:3000"
 
