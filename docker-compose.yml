@@ -4,21 +4,31 @@ services:
   db:
     image: postgres
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - ./backend/data/db:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
-  web:
+  backend:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python3 code/backend/manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/code
+      - .:/code/backend
     ports:
       - "8000:8000"
     depends_on:
       - db
     links:
       - db:db
+
+  frontend:
+    container_name: frontend-container
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/code/frontend
+    build: .
+    command: bash -c "cd code/frontend && flutter pub get && flutter pub run build_runner build && flutter pub global run webdev serve 0.0.0.0:3000"
+
 
