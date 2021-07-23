@@ -34,6 +34,5 @@ services:
     volumes:
       - .:/frontend
     build: ./frontend
-    command: >
-      sh -c "flutter pub get && flutter pub global run webdev serve 0.0.0.0:3000"
+
 
