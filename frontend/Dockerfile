@@ -20,7 +20,6 @@ USER developer
 # Run basic check to download Dark SDK
 
 RUN flutter upgrade
-RUN flutter doctor
 # Enable flutter web
 
 RUN flutter config --enable-web
