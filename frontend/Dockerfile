@@ -12,6 +12,7 @@ COPY . /code/
 RUN git clone https://github.com/flutter/flutter.git
 ENV PATH "$PATH:/code/flutter/bin"
 
+USER root
 RUN chmod -R a+w /code
 
 RUN useradd -ms /bin/bash developer
