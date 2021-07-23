@@ -19,10 +19,10 @@ RUN useradd -ms /bin/bash developer
 USER developer
 # Run basic check to download Dark SDK
 
+RUN flutter upgrade
 RUN flutter doctor
 # Enable flutter web
-RUN flutter channel beta
-RUN flutter upgrade
+
 RUN flutter config --enable-web
 RUN flutter pub global activate webdev
 
